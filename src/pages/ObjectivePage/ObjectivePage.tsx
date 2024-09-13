@@ -1,6 +1,8 @@
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
+import { Divider } from 'primereact/divider'
 import { useState } from 'react'
+import ObjectiveAccordion from './Components/ObjectiveAccordion'
 
 const ObjectivePage = () => {
 	const [visible, setVisible] = useState(false)
@@ -20,7 +22,12 @@ const ObjectivePage = () => {
 
 	return (
 		<div>
-			<h2>Objetivos</h2>
+			<h2 className='text-2xl'>Objetivos</h2>
+			<Divider/>
+			<div>
+				<ObjectiveAccordion/>
+			</div>
+			<Divider/>
 			<div>
 				<Button label="Nuevo Objetivo" onClick={() => setVisible(true)} />
 				<Dialog
@@ -73,7 +80,7 @@ const ObjectivePage = () => {
 						</div>
 						<div className="pt-4">
 							<div className="grid grid-cols-5 gap-4">
-								<div className='col-span-3'>
+								<div className="col-span-3">
 									<label htmlFor="valueP" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
 										Valor porcentual
 									</label>
@@ -86,8 +93,8 @@ const ObjectivePage = () => {
 									/>
 								</div>
 								<div className="text-center pt-4 col-span-2">
-									<p className='text-lg font-semibold'>Equivalencia:</p>
-									<p className='text-gray-500'>00.00</p>
+									<p className="text-lg font-semibold">Equivalencia:</p>
+									<p className="text-gray-500">00.00</p>
 								</div>
 							</div>
 						</div>
