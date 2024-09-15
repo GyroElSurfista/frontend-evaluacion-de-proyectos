@@ -2,6 +2,7 @@ import { Accordion, AccordionTab } from 'primereact/accordion'
 import { Button } from 'primereact/button'
 
 import './ObjectiveAccordion.css'
+import { Divider } from 'primereact/divider'
 
 const ObjectiveAccordion = () => {
 	return (
@@ -9,16 +10,17 @@ const ObjectiveAccordion = () => {
 			<Accordion multiple activeIndex={[0]}>
 				<AccordionTab
 					headerTemplate={
-						<div className="grid grid-cols-7 w-full">
-							<div className="col-span-1 pl-2">
+						<div className="flex flex-row w-full justify-between ">
+							<div className="w-auto border-r-2 px-2">
 								<span>Objetivo 1</span>
 							</div>
-							<div className="col-span-5 text-start">
+							<div className="w-9/12 text-start px-2">
 								<span className="bg-red-200 rounded-xl text-sm p-1 text-gray-600 font-normal">02/09</span> -
 								<span className="bg-indigo-200 rounded-xl text-sm p-1 ml-1 text-gray-600 font-normal">09/09</span>
 							</div>
-							<div className="col-span-1 px-3">
+							<div className="w-auto pl-3 flex justify-items-end border-l-2">
 								<Button label="Ver entregable" size="small" />
+								<Button icon='pi pi-ellipsis-v' size='small' rounded text className='ml-3 text-black'/>
 							</div>
 						</div>
 					}

@@ -28,7 +28,7 @@ const ObjectivePage = () => {
 
 			<Divider />
 			<div>
-				<Button label="Nuevo Objetivo" onClick={() => setVisible(true)} />
+				<Button label="Nuevo Objetivo" onClick={() => setVisible(true)} icon='pi pi-plus'/>
 				<Dialog
 					visible={visible}
 					modal
