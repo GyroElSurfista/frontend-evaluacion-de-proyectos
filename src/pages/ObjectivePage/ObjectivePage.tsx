@@ -2,7 +2,7 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { Divider } from 'primereact/divider'
 import { useState } from 'react'
-import ObjectiveAccordion from './Components/ObjectiveAccordion'
+import ObjectiveAccordion from './Components/ObjectiveAccordion/ObjectiveAccordion'
 
 const ObjectivePage = () => {
 	const [visible, setVisible] = useState(false)
@@ -22,12 +22,11 @@ const ObjectivePage = () => {
 
 	return (
 		<div>
-			<h2 className='text-2xl'>Objetivos</h2>
-			<Divider/>
-			<div>
-				<ObjectiveAccordion/>
-			</div>
-			<Divider/>
+			<h2 className="text-2xl">Objetivos</h2>
+			<Divider />
+			<ObjectiveAccordion />
+
+			<Divider />
 			<div>
 				<Button label="Nuevo Objetivo" onClick={() => setVisible(true)} />
 				<Dialog

@@ -1,10 +1,28 @@
 import { Accordion, AccordionTab } from 'primereact/accordion'
+import { Button } from 'primereact/button'
+
+import './ObjectiveAccordion.css'
 
 const ObjectiveAccordion = () => {
 	return (
-		<div className="card">
+		<div className="">
 			<Accordion multiple activeIndex={[0]}>
-				<AccordionTab header="Header I">
+				<AccordionTab
+					headerTemplate={
+						<div className="grid grid-cols-7 w-full">
+							<div className="col-span-1 pl-2">
+								<span>Objetivo 1</span>
+							</div>
+							<div className="col-span-5 text-start">
+								<span className="bg-red-200 rounded-xl text-sm p-1 text-gray-600 font-normal">02/09</span> -
+								<span className="bg-indigo-200 rounded-xl text-sm p-1 ml-1 text-gray-600 font-normal">09/09</span>
+							</div>
+							<div className="col-span-1 px-3">
+								<Button label="Ver entregable" size="small" />
+							</div>
+						</div>
+					}
+				>
 					<p className="m-0">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 						enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
