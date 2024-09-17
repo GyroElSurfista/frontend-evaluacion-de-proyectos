@@ -1,13 +1,10 @@
-import { useState } from 'react'
+import { act, useState } from 'react'
 import { Toolbar } from 'primereact/toolbar'
-import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
 import Activity from './Activity'
-import { Dropdown } from 'primereact/dropdown'
-import { Divider } from 'primereact/divider'
-import { Calendar } from 'primereact/calendar'
+import DialogActivity from './DialogActivity'
 
-// Define el tipo para las actividades
-type ActivityProps = {
+export type ActivityProps = {
 	nroActividad: number
 	nombreActividad: string
 	fechaInicio: Date
@@ -17,16 +14,10 @@ type ActivityProps = {
 	resultado: string
 }
 
-// Tipo para el estado de la actividad seleccionada
 type SelectedActivityState = ActivityProps | null
 
 function PruebasActivity() {
-	const [selectedActivity, setSelectedActivity] = useState<SelectedActivityState>(null)
-	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
-
-	const responsables = ['Jairo Maida', 'Mariana Vallejos', 'Emily Callejas', 'Nahuel Torrez', 'Winsor Orellana', 'Walter Sanabria']
-
-	const activities: ActivityProps[] = [
+	const [activities, setActivities] = useState<ActivityProps[]>([
 		{
 			nroActividad: 1,
 			nombreActividad: 'Entrevista a nuestro tutor TIS',
@@ -54,10 +45,17 @@ function PruebasActivity() {
 			responsable: null,
 			resultado: 'Prototipo base para programar en el frontend.',
 		},
-	]
+	])
+
+	const [selectedActivity, setSelectedActivity] = useState<SelectedActivityState>(null)
+	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
+	const [isEditMode, setIsEditMode] = useState<boolean>(false)
+
+	const responsables = ['Jairo Maida', 'Mariana Vallejos', 'Emily Callejas', 'Nahuel Torrez', 'Winsor Orellana', 'Walter Sanabria']
 
 	const handleActivityClick = (activity: ActivityProps) => {
 		setSelectedActivity(activity)
+		setIsEditMode(false)
 		setIsDialogOpen(true)
 	}
 
@@ -66,78 +64,71 @@ function PruebasActivity() {
 		setSelectedActivity(null)
 	}
 
-	const handleResponsableChange = (e: any) => {
+	const handleNewActivityChange = (e: any) => {
+		const { name, value } = e.target
+		setSelectedActivity((prevState) => (prevState ? { ...prevState, [name]: value } : null))
+	}
+
+	const handleAddNewActivity = () => {
 		if (selectedActivity) {
-			setSelectedActivity({
-				...selectedActivity,
-				responsable: e.value,
-			})
+			setActivities((prevActivities) => [...prevActivities, { ...selectedActivity, nroActividad: activities.length + 1 }])
+			setIsDialogOpen(false)
 		}
 	}
 
+	const handleAddActivityClick = () => {
+		setSelectedActivity({
+			nroActividad: activities.length + 1,
+			nombreActividad: '',
+			fechaInicio: new Date(),
+			fechaFin: new Date(),
+			descripcion: '',
+			responsable: null,
+			resultado: '',
+		})
+		setIsEditMode(true)
+		setIsDialogOpen(true)
+	}
+
 	return (
-		<>
+		<div className="activity-page">
 			<Toolbar
-				end={
+				right={() => (
 					<h3>
-						Hola Mundo <br /> para no tapar
+						Hola Mundo <br /> No debe taparse
 					</h3>
-				}
+				)}
 			/>
 
-			<div className={`flex p-4 transition-all duration-300 ${isDialogOpen ? 'mr-[35vw]' : 'w-full'}`}>
+			<div className={`flex p-4 ${isDialogOpen ? 'mr-[50vw]' : 'w-full'}`}>
 				<div className="flex-1">
 					{activities.map((activity) => (
-						<Activity key={activity.nroActividad} {...activity} onClick={() => handleActivityClick(activity)} />
+						<Activity
+							key={activity.nroActividad}
+							nroActividad={0}
+							nombreActividad={activity.nombreActividad}
+							fechaInicio={activity.fechaInicio}
+							fechaFin={activity.fechaFin}
+							descripcion={activity.descripcion}
+							responsable={activity.responsable}
+							resultado={activity.resultado}
+							onClick={() => handleActivityClick(activity)}
+						/>
 					))}
+					<Button label="Agregar Actividad" icon="pi pi-plus" onClick={handleAddActivityClick} />
 				</div>
 
-				<Dialog
-					header={selectedActivity?.nombreActividad || ''}
-					visible={isDialogOpen}
+				<DialogActivity
+					activity={selectedActivity}
+					isVisible={isDialogOpen}
 					onHide={handleDialogClose}
-					modal={false}
-					position="right"
-					className="fixed top-28 w-[35vw] h-full bg-white shadow-lg transition-transform duration-300"
-					maskStyle={{ backgroundColor: 'transparent' }}
-				>
-					{selectedActivity && (
-						<>
-							<h3 className="text-lg font-bold">Duración</h3>
-							<div className="flex border border-black p-1 mt-1 text-xs">
-								<p>Fecha de Inicio</p>
-								<Divider layout="vertical" />
-								<Calendar disabled value={selectedActivity.fechaInicio} dateFormat="dd/mm/yy" />
-								<Divider layout="vertical" />
-							</div>
-							<div className="flex border border-black p-1 mt-1 text-sm">
-								<p>Fecha de Fin</p>
-								<Divider layout="vertical" />
-								<Calendar disabled value={selectedActivity.fechaFin} dateFormat="dd/mm/yy" />
-								<Divider layout="vertical" />
-							</div>
-							<h3 className="text-lg font-bold">Descripción</h3>
-							<p className="text-sm border border-black p-1 mt-1">{selectedActivity.descripcion}</p>
-							<h3 className="text-lg font-bold mt-2">Responsable</h3>
-							<div className="flex mt-2">
-								<p className="text-sm p-1 mt-1">Persona asignada</p>
-								<Dropdown
-									className="w-2 text-sm"
-									placeholder="Nombre de Responsable"
-									onChange={handleResponsableChange}
-									options={responsables.map((responsable) => ({ label: responsable, value: responsable }))}
-									value={selectedActivity.responsable}
-									showClear
-									disabled
-								/>
-							</div>
-							<h3 className="text-lg font-bold mt-2">Resultado</h3>
-							<p className="text-sm border border-black p-1 mt-1">{selectedActivity.resultado}</p>
-						</>
-					)}
-				</Dialog>
+					onSave={handleAddNewActivity}
+					onChange={handleNewActivityChange}
+					isEditMode={isEditMode}
+					responsables={responsables}
+				/>
 			</div>
-		</>
+		</div>
 	)
 }
 
