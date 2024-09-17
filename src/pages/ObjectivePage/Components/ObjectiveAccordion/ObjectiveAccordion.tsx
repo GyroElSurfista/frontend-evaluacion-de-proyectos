@@ -2,7 +2,6 @@ import { Accordion, AccordionTab } from 'primereact/accordion'
 import { Button } from 'primereact/button'
 
 import './ObjectiveAccordion.css'
-import { Divider } from 'primereact/divider'
 
 const ObjectiveAccordion = () => {
 	return (
@@ -20,7 +19,7 @@ const ObjectiveAccordion = () => {
 							</div>
 							<div className="w-auto pl-3 flex justify-items-end border-l-2">
 								<Button label="Ver entregable" size="small" />
-								<Button icon='pi pi-ellipsis-v' size='small' rounded text className='ml-3 text-black'/>
+								<Button icon="pi pi-ellipsis-v" size="small" rounded text className="ml-3 text-black" />
 							</div>
 						</div>
 					}
