@@ -73,6 +73,7 @@ function PruebasActivity() {
 		if (selectedActivity) {
 			setActivities((prevActivities) => [...prevActivities, { ...selectedActivity, nroActividad: activities.length + 1 }])
 			setIsDialogOpen(false)
+			setSelectedActivity(null)
 		}
 	}
 
@@ -91,7 +92,7 @@ function PruebasActivity() {
 	}
 
 	return (
-		<div className="activity-page">
+		<>
 			<Toolbar
 				right={() => (
 					<h3>
@@ -100,8 +101,8 @@ function PruebasActivity() {
 				)}
 			/>
 
-			<div className={`flex p-4 ${isDialogOpen ? 'mr-[50vw]' : 'w-full'}`}>
-				<div className="flex-1">
+			<div className={`flex p-4 overflow-x-hidden`}>
+				<div className={`${isDialogOpen ? 'w-[65vw]' : 'w-full'}`}>
 					{activities.map((activity) => (
 						<Activity
 							key={activity.nroActividad}
@@ -115,7 +116,7 @@ function PruebasActivity() {
 							onClick={() => handleActivityClick(activity)}
 						/>
 					))}
-					<Button label="Agregar Actividad" icon="pi pi-plus" onClick={handleAddActivityClick} />
+					<Button label="Agregar Actividad" onClick={handleAddActivityClick} />
 				</div>
 
 				<DialogActivity
@@ -128,7 +129,7 @@ function PruebasActivity() {
 					responsables={responsables}
 				/>
 			</div>
-		</div>
+		</>
 	)
 }
 
