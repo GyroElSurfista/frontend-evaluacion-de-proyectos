@@ -14,22 +14,24 @@ interface ObjectiveFormData {
 
 const ObjectivePage = () => {
 	const [visible, setVisible] = useState(false)
+	const [objectives, setObjectives] = useState<ObjectiveFormData[]>([]); // Estado para almacenar los objetivos
 	const {
 		register,
 		handleSubmit,
 		reset,
 		formState: { errors },
-	} = useForm<ObjectiveFormData>() 
+	} = useForm<ObjectiveFormData>()
 
 	const onSubmit = (data: ObjectiveFormData) => {
 		console.log(data)
 		setVisible(false)
+		setObjectives([...objectives, data]);
 		reset()
 	}
 
 	const handleClose = () => {
 		setVisible(false)
-		reset() 
+		reset()
 	}
 
 	const headerElement = (
@@ -49,7 +51,7 @@ const ObjectivePage = () => {
 		<div>
 			<h2 className="text-2xl font-bold">Objetivos</h2>
 			<Divider />
-			<ObjectiveAccordion />
+			<ObjectiveAccordion objectives={objectives} />
 
 			<Divider />
 			<div className="flex justify-center">
@@ -130,7 +132,7 @@ const ObjectivePage = () => {
 							</div>
 							<div className="text-center pt-4 col-span-2">
 								<p className="text-lg font-semibold">Equivalencia:</p>
-								<p className="text-gray-500">00.00</p>
+								<p className="text-gray-500">Bs. 00.00</p>
 							</div>
 						</div>
 					</div>
