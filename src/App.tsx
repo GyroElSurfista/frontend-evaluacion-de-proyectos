@@ -1,11 +1,11 @@
 import './App.css'
-import { CreateObjetive } from './components/CreateObjetive.tsx'
+import { AddObservation } from './components/AddObservation.tsx'
 
 function App() {
 	return (
 		<>
 			<div>
-				<CreateObjetive />
+				<AddObservation />
 			</div>
 		</>
 	)
