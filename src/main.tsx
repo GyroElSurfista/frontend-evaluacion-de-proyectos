@@ -1,14 +1,14 @@
+import { StyledEngineProvider } from '@mui/material'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { PrimeReactProvider } from 'primereact/api'
-import Tailwind from 'primereact/passthrough/tailwind';
-import App from './App.tsx'
+import App from './App'
 import './index.css'
+import PruebasActivity from './PruebasActivity'
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<PrimeReactProvider value={{ unstyled: true, pt: Tailwind}}>
-			<App />
-		</PrimeReactProvider>
+		<StyledEngineProvider injectFirst>
+			<PruebasActivity />
+		</StyledEngineProvider>
 	</StrictMode>
 )

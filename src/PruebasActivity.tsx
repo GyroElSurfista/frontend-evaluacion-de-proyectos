@@ -1,6 +1,6 @@
-import { act, useState } from 'react'
-import { Toolbar } from 'primereact/toolbar'
-import { Button } from 'primereact/button'
+import { useState } from 'react'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
 import Activity from './Activity'
 import DialogActivity from './DialogActivity'
 
@@ -93,20 +93,14 @@ function PruebasActivity() {
 
 	return (
 		<>
-			<Toolbar
-				right={() => (
-					<h3>
-						Hola Mundo <br /> No debe taparse
-					</h3>
-				)}
-			/>
+			<Toolbar className="bg-red-700" />
 
 			<div className={`flex p-4 overflow-x-hidden`}>
-				<div className={`${isDialogOpen ? 'w-[65vw]' : 'w-full'}`}>
-					{activities.map((activity) => (
+				<div className={` ${isDialogOpen ? 'w-[65%] flex-shrink mr-4' : 'w-full'}`}>
+					{activities.map((activity, index: number) => (
 						<Activity
 							key={activity.nroActividad}
-							nroActividad={0}
+							nroActividad={index + 1}
 							nombreActividad={activity.nombreActividad}
 							fechaInicio={activity.fechaInicio}
 							fechaFin={activity.fechaFin}
@@ -116,7 +110,7 @@ function PruebasActivity() {
 							onClick={() => handleActivityClick(activity)}
 						/>
 					))}
-					<Button label="Agregar Actividad" onClick={handleAddActivityClick} />
+					<Button variant='contained' onClick={handleAddActivityClick}>Agregar actividad</Button>
 				</div>
 
 				<DialogActivity

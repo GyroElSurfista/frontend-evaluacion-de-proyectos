@@ -1,4 +1,5 @@
-import { Divider } from 'primereact/divider'
+import { AccountCircle } from '@mui/icons-material'
+import Divider from '@mui/material/Divider'
 
 type ActivityProps = {
 	nroActividad: number
@@ -11,22 +12,21 @@ type ActivityProps = {
 	onClick: () => void
 }
 
-const Activity: React.FC<ActivityProps> = ({
-	nroActividad,
-	nombreActividad,
-	fechaInicio,
-	fechaFin,
-	descripcion,
-	responsable,
-	resultado,
-	onClick,
-}) => {
+const Activity: React.FC<ActivityProps> = ({ nroActividad, nombreActividad, responsable, onClick }) => {
 	return (
-		<div onClick={onClick} className="flex flex-grow text-sm bg-red-400 py-2 items-center m-2 rounded-sm cursor-pointer">
-			<p className="px-2">Actividad {nroActividad}</p>
-			<Divider layout="vertical" />
-			<p className="px-2">{nombreActividad}</p>
-			{responsable === null ? <p className="px-2">No asignado</p> : <p className="px-2">{responsable}</p>}
+		<div onClick={onClick} className="flex text-sm bg-purple-50 my-2 items-center cursor-pointer">
+			<div className="flex w-[12%] items-center justify-between">
+				<p className="px-[10%] text-center">Actividad {nroActividad}</p>
+				<Divider orientation="vertical" flexItem variant="middle" />
+				{/* <Divider layout="vertical" className="py-2 mx-0 px-0 before:border-black" /> */}
+			</div>
+
+			<p className="truncate w-[75%] flex-shrink px-[2%]">{nombreActividad}</p>
+
+			<div className="flex w-[15%] items-center md:opacity-0 lg:opacity-100">
+				<AccountCircle fontSize='large'/>
+				<p className="px-[10%]">{responsable === null ? 'No asignado' : responsable}</p>
+			</div>
 		</div>
 	)
 }
