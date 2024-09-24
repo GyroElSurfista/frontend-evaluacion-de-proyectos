@@ -14,7 +14,7 @@ interface ObjectiveFormData {
 
 const ObjectivePage = () => {
 	const [visible, setVisible] = useState(false)
-	const [objectives, setObjectives] = useState<ObjectiveFormData[]>([]); // Estado para almacenar los objetivos
+	const [objectives, setObjectives] = useState<ObjectiveFormData[]>([]) // Estado para almacenar los objetivos
 	const {
 		register,
 		handleSubmit,
@@ -25,7 +25,7 @@ const ObjectivePage = () => {
 	const onSubmit = (data: ObjectiveFormData) => {
 		console.log(data)
 		setVisible(false)
-		setObjectives([...objectives, data]);
+		setObjectives([...objectives, data])
 		reset()
 	}
 
@@ -51,7 +51,9 @@ const ObjectivePage = () => {
 		<div>
 			<h2 className="text-2xl font-bold">Objetivos</h2>
 			<Divider />
-			<ObjectiveAccordion objectives={objectives} />
+			{objectives.map((obj, index) => (
+				<ObjectiveAccordion objective={obj} indexObj={index + 1} />
+			))}
 
 			<Divider />
 			<div className="flex justify-center">
