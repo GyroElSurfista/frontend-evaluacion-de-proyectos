@@ -109,9 +109,9 @@ const NewObjectiveModal: React.FC<NewObjectiveModalProps> = ({ isOpen, onClose, 
             </div>
           </div>
           <div className="mt-6 flex justify-end gap-2">
-            <button onClick={onClose}>Cancelar</button>
-            <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-              Crear Objetivo
+            <button onClick={onClose} className='button-secondary_outlined'>Cancelar</button>
+            <button type="submit" className="button-primary">
+              Crear
             </button>
           </div>
         </form>
