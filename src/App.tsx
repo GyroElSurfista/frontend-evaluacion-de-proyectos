@@ -3,11 +3,11 @@ import ObjectivePage from './pages/ObjectivePage/ObjectivePage'
 import 'primeicons/primeicons.css'
 
 function App() {
-	return (
-		<>
-			<ObjectivePage />
-		</>
-	)
+  return (
+    <>
+      <ObjectivePage />
+    </>
+  )
 }
 
 export default App
