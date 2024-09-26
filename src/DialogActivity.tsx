@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from '@mui/material/Select'
 import { ActivityProps } from './PruebasActivity'
 import { MenuItem, Button, TextField, Divider, FormControl, InputAdornment } from '@mui/material'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -13,7 +12,7 @@ type DialogActivityProps = {
 	isVisible: boolean
 	onHide: () => void
 	onSave: () => void
-	onChange: (e: SelectChangeEvent<string | null>) => void
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 	isEditMode: boolean
 	responsables: string[]
 }
@@ -35,7 +34,7 @@ const DialogActivity = ({ activity, isVisible, onHide, onSave, onChange, isEditM
 				<>
 					<div className="flex justify-between items-center">
 						{isEditMode ? (
-							<TextField id="standard-nasoc" label="Nombre de la Actividad"></TextField>
+							<TextField name="nombreActividad" onChange={onChange} label="Nombre de la Actividad"></TextField>
 						) : (
 							<h2 className="text-xl font-bold">{activity?.nombreActividad}</h2>
 						)}
@@ -47,35 +46,48 @@ const DialogActivity = ({ activity, isVisible, onHide, onSave, onChange, isEditM
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<DatePicker
 							label="Fecha de Inicio"
+							name="fechaInicio"
 							className="mb-2 w-1/3"
 							value={fechaInicio}
-							onChange={(newValue) => setFechaInicio(newValue)}
+							format="DD/MM/YYYY"
+							// onChange={onChange}
 							disabled={!isEditMode}
 						/>
 					</LocalizationProvider>
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<DatePicker
 							label="Fecha de Fin"
+							name="fechaFin"
 							className="my-2 w-1/3"
 							value={fechaFin}
-							onChange={(newValue) => setFechaFin(newValue)}
+							format="DD/MM/YYYY"
+							// onChange={onChange}
 							disabled={!isEditMode}
 						/>
 					</LocalizationProvider>
 
 					<h3 className="text-lg font-bold mb-2">Descripción</h3>
-					<TextField variant="outlined" className="mb-4" disabled={!isEditMode} multiline />
+					<TextField
+						name="descripcion"
+						value={activity.descripcion}
+						onChange={onChange}
+						variant="outlined"
+						className="mb-4"
+						disabled={!isEditMode}
+						multiline
+					/>
 
 					<h3 className="text-lg font-bold mb-2">Responsable</h3>
 					<div className="flex justify-between ">
 						<p className="text-sm w-full">Persona asignada</p>
 						{
 							<TextField
-								id="input-with-icon-textfield"
+								name="responsable"
+								value={activity.responsable}
+								onChange={onChange}
 								label="Nombre del responsable"
 								select
 								fullWidth
-								// value={activity.responsable}
 								disabled={!isEditMode}
 								slotProps={{
 									input: {
@@ -98,7 +110,15 @@ const DialogActivity = ({ activity, isVisible, onHide, onSave, onChange, isEditM
 					</div>
 
 					<h3 className="text-lg font-bold mb-2">Resultado</h3>
-					<TextField variant="outlined" className="mb-4" disabled={!isEditMode} multiline />
+					<TextField
+						name="resultado"
+						value={activity.resultado}
+						onChange={onChange}
+						variant="outlined"
+						className="mb-4"
+						disabled={!isEditMode}
+						multiline
+					/>
 
 					{isEditMode && (
 						<Button variant="contained" className="w-1/3" size="small" onClick={onSave}>

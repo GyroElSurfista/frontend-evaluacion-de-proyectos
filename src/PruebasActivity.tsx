@@ -3,7 +3,6 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import Activity from './Activity'
 import DialogActivity from './DialogActivity'
-import { SelectChangeEvent } from '@mui/material'
 
 export type ActivityProps = {
 	nroActividad: number
@@ -65,9 +64,11 @@ function PruebasActivity() {
 		setIsDialogOpen(false)
 		setSelectedActivity(null)
 	}
-
-	const handleNewActivityChange = (e: SelectChangeEvent<string | null>) => {
+	// SelectChangeEvent<string | null>
+	const handleNewActivityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
+		// console.log("El nombre es ", name)
+		// console.log("El valor es ", value)
 		setSelectedActivity((prevState) => (prevState ? { ...prevState, [name]: value } : null))
 	}
 
