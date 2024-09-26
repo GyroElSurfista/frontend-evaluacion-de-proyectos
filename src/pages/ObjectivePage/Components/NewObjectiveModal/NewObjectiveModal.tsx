@@ -109,7 +109,9 @@ const NewObjectiveModal: React.FC<NewObjectiveModalProps> = ({ isOpen, onClose, 
             </div>
           </div>
           <div className="mt-6 flex justify-end gap-2">
-            <button onClick={onClose} className='button-secondary_outlined'>Cancelar</button>
+            <button onClick={onClose} className="button-secondary_outlined">
+              Cancelar
+            </button>
             <button type="submit" className="button-primary">
               Crear
             </button>

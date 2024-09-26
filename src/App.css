@@ -1,7 +1,4 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
 }
 
 .button-primary {
@@ -32,6 +29,6 @@
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.1);
 }
 
-.button-secondary_outlined:hover{
+.button-secondary_outlined:hover {
   background-color: #ebecf6;
 }

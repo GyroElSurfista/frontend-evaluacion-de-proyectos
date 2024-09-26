@@ -1,10 +1,12 @@
 import './App.css'
-import ObjectivePage from './pages/ObjectivePage/ObjectivePage'
+import NavBar from './components/NavBar'
+import Sidebar from './components/Sidebar'
 
 function App() {
   return (
     <>
-      <ObjectivePage />
+    <NavBar/>
+    <Sidebar/>
     </>
   )
 }
