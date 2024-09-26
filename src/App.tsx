@@ -1,13 +1,14 @@
 import './App.css'
-import ObjectivePage from './pages/ObjectivePage/ObjectivePage'
-import 'primeicons/primeicons.css'
+import NavBar from './components/NavBar'
+import Sidebar from './components/Sidebar'
 
 function App() {
-	return (
-		<>
-			<ObjectivePage />
-		</>
-	)
+  return (
+    <>
+    <NavBar/>
+    <Sidebar/>
+    </>
+  )
 }
 
 export default App

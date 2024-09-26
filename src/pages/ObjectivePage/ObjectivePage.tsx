@@ -1,107 +1,45 @@
-import { Button } from 'primereact/button'
-import { Dialog } from 'primereact/dialog'
-import { Divider } from 'primereact/divider'
 import { useState } from 'react'
 import ObjectiveAccordion from './Components/ObjectiveAccordion/ObjectiveAccordion'
+import NewObjectiveModal from './Components/NewObjectiveModal/NewObjectiveModal'
+
+interface Objective {
+  iniDate: string
+  finDate: string
+  objective: string
+  valueP: string
+}
 
 const ObjectivePage = () => {
-	const [visible, setVisible] = useState(false)
+  const [objectives, setObjectives] = useState<Objective[]>([]) // Estado para almacenar los objetivos
 
-	const headerElement = (
-		<div className="inline-flex align-items-center justify-content-center gap-2">
-			<span className="font-bold white-space-nowrap">Añadir un nuevo objetivo</span>
-		</div>
-	)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-	const footerContent = (
-		<div className="">
-			<Button label="Cancelar" onClick={() => setVisible(false)} autoFocus severity="secondary" />
-			<Button label="Crear" onClick={() => setVisible(false)} autoFocus className="ml-3" />
-		</div>
-	)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
 
-	return (
-		<div>
-			<h2 className="text-2xl font-bold">Objetivos</h2>
-			<Divider />
-			<ObjectiveAccordion />
+  // Función para añadir un nuevo objetivo
+  const handleCreateObjective = (newObjective: Objective) => {
+    setObjectives([...objectives, newObjective])
+  }
 
-			<Divider />
-			<div className='flex justify-center'>
-				<Button label="Nuevo Objetivo" onClick={() => setVisible(true)} icon="pi pi-plus" />
-			</div>
-			<Dialog
-				visible={visible}
-				modal
-				header={headerElement}
-				footer={footerContent}
-				style={{ width: '28rem' }}
-				onHide={() => {
-					if (!visible) return
-					setVisible(false)
-				}}
-			>
-				<form>
-					<div className="grid grid-cols-2 gap-4">
-						<div className="">
-							<label htmlFor="iniDate" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-								Fecha de inicio
-							</label>
-							<input
-								type="date"
-								id="iniDate"
-								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								required
-							/>
-						</div>
-						<div className="col-2">
-							<label htmlFor="finDate" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-								Fecha de fin
-							</label>
-							<input
-								type="date"
-								id="finDate"
-								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								required
-							/>
-						</div>
-					</div>
-					<div className="pt-4">
-						<label htmlFor="objective" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-							Objetivo
-						</label>
-						<input
-							type="text"
-							id="objective"
-							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="¿Cuál es el objetivo?"
-							required
-						/>
-					</div>
-					<div className="pt-4">
-						<div className="grid grid-cols-5 gap-4">
-							<div className="col-span-3">
-								<label htmlFor="valueP" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-									Valor porcentual
-								</label>
-								<input
-									type="text"
-									id="valueP"
-									className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-									placeholder="¿Cuál es el valor del objetivo?"
-									required
-								/>
-							</div>
-							<div className="text-center pt-4 col-span-2">
-								<p className="text-lg font-semibold">Equivalencia:</p>
-								<p className="text-gray-500">00.00</p>
-							</div>
-						</div>
-					</div>
-				</form>
-			</Dialog>
-		</div>
-	)
+  return (
+    <div className='px-2 mx-6'>
+      <h2 className="text-2xl font-bold">Objetivos</h2>
+      <hr className="border-[1.5px] border-[#c6caff] my-3" />
+      {objectives.map((obj, index) => (
+        <ObjectiveAccordion objective={obj} indexObj={index + 1} key={index} />
+      ))}
+
+      <hr className="border-[1.5px] border-[#c6caff] mt-4" />
+      <div className="flex justify-center pt-3">
+        <button onClick={openModal} className="button-primary">
+          Nuevo Objetivo
+        </button>
+      </div>
+
+      <NewObjectiveModal isOpen={isModalOpen} onClose={closeModal} onCreate={handleCreateObjective} />
+    </div>
+  )
 }
 
 export default ObjectivePage
