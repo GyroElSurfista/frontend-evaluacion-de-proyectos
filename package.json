@@ -11,9 +11,11 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
+		"primeicons": "^7.0.0",
 		"primereact": "^10.8.2",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
+		"react-dom": "^18.3.1",
+		"react-hook-form": "^7.53.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.10.0",
@@ -29,6 +31,7 @@
 		"eslint-plugin-react-hooks": "^5.1.0-rc.0",
 		"eslint-plugin-react-refresh": "^0.4.9",
 		"globals": "^15.9.0",
+		"husky": "^9.1.6",
 		"postcss": "^8.4.45",
 		"prettier": "3.3.3",
 		"tailwindcss": "^3.4.10",
