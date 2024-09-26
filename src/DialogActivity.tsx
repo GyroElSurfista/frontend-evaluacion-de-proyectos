@@ -3,9 +3,9 @@ import { MenuItem, Button, TextField, Divider, FormControl, InputAdornment } fro
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { useEffect, useState } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { AccountCircle } from '@mui/icons-material'
+import { DateValidationError, PickerChangeHandlerContext } from '@mui/x-date-pickers'
 
 type DialogActivityProps = {
 	activity: ActivityProps | null
@@ -13,19 +13,23 @@ type DialogActivityProps = {
 	onHide: () => void
 	onSave: () => void
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+	onChangeInitialDate: (value: Dayjs | null, context: PickerChangeHandlerContext<DateValidationError>) => void
+	onChangeFinalDate: (value: Dayjs | null, context: PickerChangeHandlerContext<DateValidationError>) => void
 	isEditMode: boolean
 	responsables: string[]
 }
 
-const DialogActivity = ({ activity, isVisible, onHide, onSave, onChange, isEditMode, responsables }: DialogActivityProps) => {
-	const [fechaInicio, setFechaInicio] = useState<Dayjs | null>(dayjs(activity?.fechaInicio))
-	const [fechaFin, setFechaFin] = useState<Dayjs | null>(dayjs(activity?.fechaFin))
-
-	useEffect(() => {
-		setFechaInicio(dayjs(activity?.fechaInicio))
-		setFechaFin(dayjs(activity?.fechaFin))
-	}, [activity])
-
+const DialogActivity = ({
+	activity,
+	isVisible,
+	onHide,
+	onSave,
+	onChange,
+	onChangeInitialDate,
+	onChangeFinalDate,
+	isEditMode,
+	responsables,
+}: DialogActivityProps) => {
 	return (
 		<FormControl
 			className={`shadow-lg transform transition-transform ${isVisible ? 'translate-x-0 w-[35%] p-4' : 'translate-x-full w-[0%]'}`}
@@ -45,23 +49,23 @@ const DialogActivity = ({ activity, isVisible, onHide, onSave, onChange, isEditM
 					<h3 className="text-lg font-bold my-4">Duración</h3>
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<DatePicker
-							label="Fecha de Inicio"
 							name="fechaInicio"
+							value={dayjs(activity.fechaInicio)}
+							onChange={onChangeInitialDate}
+							label="Fecha de Inicio"
 							className="mb-2 w-1/3"
-							value={fechaInicio}
 							format="DD/MM/YYYY"
-							// onChange={onChange}
 							disabled={!isEditMode}
 						/>
 					</LocalizationProvider>
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<DatePicker
-							label="Fecha de Fin"
 							name="fechaFin"
+							value={dayjs(activity.fechaFin)}
+							onChange={onChangeFinalDate}
+							label="Fecha de Fin"
 							className="my-2 w-1/3"
-							value={fechaFin}
 							format="DD/MM/YYYY"
-							// onChange={onChange}
 							disabled={!isEditMode}
 						/>
 					</LocalizationProvider>

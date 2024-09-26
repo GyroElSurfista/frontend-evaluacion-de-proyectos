@@ -3,6 +3,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import Activity from './Activity'
 import DialogActivity from './DialogActivity'
+import { Dayjs } from 'dayjs'
 
 export type ActivityProps = {
 	nroActividad: number
@@ -64,12 +65,22 @@ function PruebasActivity() {
 		setIsDialogOpen(false)
 		setSelectedActivity(null)
 	}
-	// SelectChangeEvent<string | null>
+
 	const handleNewActivityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
-		// console.log("El nombre es ", name)
-		// console.log("El valor es ", value)
 		setSelectedActivity((prevState) => (prevState ? { ...prevState, [name]: value } : null))
+	}
+
+	const handleNewInitialDateActivityChange = (value: Dayjs | null) => {
+		if (value) {
+			setSelectedActivity((prevState) => (prevState ? { ...prevState, fechaInicio: value.toDate() } : null))
+		}
+	}
+
+	const handleNewFinalDateActivityChange = (value: Dayjs | null) => {
+		if (value) {
+			setSelectedActivity((prevState) => (prevState ? { ...prevState, fechaFin: value.toDate() } : null))
+		}
 	}
 
 	const handleAddNewActivity = () => {
@@ -97,13 +108,12 @@ function PruebasActivity() {
 	return (
 		<>
 			<Toolbar className="bg-red-700" />
-
 			<div className={`flex p-4 overflow-x-hidden`}>
 				<div className={` ${isDialogOpen ? 'w-[65%] flex-shrink mr-4' : 'w-full'}`}>
-					{activities.map((activity, index: number) => (
+					{activities.map((activity) => (
 						<Activity
 							key={activity.nroActividad}
-							nroActividad={index + 1}
+							nroActividad={activity.nroActividad}
 							nombreActividad={activity.nombreActividad}
 							fechaInicio={activity.fechaInicio}
 							fechaFin={activity.fechaFin}
@@ -124,6 +134,8 @@ function PruebasActivity() {
 					onHide={handleDialogClose}
 					onSave={handleAddNewActivity}
 					onChange={handleNewActivityChange}
+					onChangeInitialDate={handleNewInitialDateActivityChange}
+					onChangeFinalDate={handleNewFinalDateActivityChange}
 					isEditMode={isEditMode}
 					responsables={responsables}
 				/>
