@@ -3,6 +3,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import Activity from './Activity'
 import DialogActivity from './DialogActivity'
+import { SelectChangeEvent } from '@mui/material'
 
 export type ActivityProps = {
 	nroActividad: number
@@ -23,7 +24,7 @@ function PruebasActivity() {
 			nombreActividad: 'Entrevista a nuestro tutor TIS',
 			fechaInicio: new Date(),
 			fechaFin: new Date(),
-			descripcion: 'Elicitación de requerimientos para obtener el Product Backlog.',
+			descripcion: 'Descripcion 1 - Elicitación de requerimientos para obtener el Product Backlog.',
 			responsable: null,
 			resultado: 'Completar las historias de usuario con su estimación y priorización correspondiente',
 		},
@@ -32,7 +33,8 @@ function PruebasActivity() {
 			nombreActividad: 'Observar procedimiento de evaluaciones TIS',
 			fechaInicio: new Date(),
 			fechaFin: new Date(),
-			descripcion: 'Elicitación de requerimientos para obtener el Product Backlog.',
+			descripcion:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mi massa, posuere vel interdum a, posuere at mauris. Cras sem est, malesuada sed libero eget, egestas vulputate turpis. Vivamus eu placerat sem. Vestibulum lobortis velit sit amet nunc faucibus, vel viverra ex accumsan. Ut imperdiet nunc neque, nec sodales risus faucibus vitae. Mauris interdum nulla in elementum vulputate. Phasellus sollicitudin vehicula ornare. Morbi id mauris fermentum, consequat nisl nec, hendrerit neque. Maecenas pharetra mattis quam. Integer quis fringilla nibh, quis lobortis massa. Quisque non vehicula enim. Nullam non lorem in sem vulputate faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus.',
 			responsable: 'Winsor Orellana',
 			resultado: 'Completar las historias de usuario con su estimación y priorización correspondiente',
 		},
@@ -64,7 +66,7 @@ function PruebasActivity() {
 		setSelectedActivity(null)
 	}
 
-	const handleNewActivityChange = (e: any) => {
+	const handleNewActivityChange = (e: SelectChangeEvent<string | null>) => {
 		const { name, value } = e.target
 		setSelectedActivity((prevState) => (prevState ? { ...prevState, [name]: value } : null))
 	}
@@ -110,7 +112,9 @@ function PruebasActivity() {
 							onClick={() => handleActivityClick(activity)}
 						/>
 					))}
-					<Button variant='contained' onClick={handleAddActivityClick}>Agregar actividad</Button>
+					<Button variant="contained" onClick={handleAddActivityClick}>
+						Agregar actividad
+					</Button>
 				</div>
 
 				<DialogActivity
