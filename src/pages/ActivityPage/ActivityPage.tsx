@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
-import Activity from './Activity'
-import DialogActivity from './DialogActivity'
+import Activity from './Components/Activity'
+import DialogActivity from './Components/DialogActivity'
 import { Dayjs } from 'dayjs'
 
 export type ActivityProps = {
@@ -17,7 +16,7 @@ export type ActivityProps = {
 
 type SelectedActivityState = ActivityProps | null
 
-function PruebasActivity() {
+function ActivityPage() {
 	const [activities, setActivities] = useState<ActivityProps[]>([
 		{
 			nroActividad: 1,
@@ -107,7 +106,7 @@ function PruebasActivity() {
 
 	return (
 		<>
-			<Toolbar className="bg-red-700" />
+			
 			<div className={`flex p-4 overflow-x-hidden`}>
 				<div className={` ${isDialogOpen ? 'w-[65%] flex-shrink mr-4' : 'w-full'}`}>
 					{activities.map((activity) => (
@@ -144,4 +143,4 @@ function PruebasActivity() {
 	)
 }
 
-export default PruebasActivity
+export default ActivityPage

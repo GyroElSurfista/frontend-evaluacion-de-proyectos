@@ -1,4 +1,4 @@
-import { ActivityProps } from './PruebasActivity'
+import { ActivityProps } from '../ActivityPage'
 import { MenuItem, Button, TextField, Divider, FormControl, InputAdornment } from '@mui/material'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
