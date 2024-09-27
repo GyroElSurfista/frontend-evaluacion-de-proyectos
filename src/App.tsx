@@ -1,14 +1,14 @@
 import './App.css'
-import { AddObservation } from './components/AddObservation.tsx'
+import NavBar from './components/NavBar'
+import Sidebar from './components/Sidebar'
 
 function App() {
-	return (
-		<>
-			<div>
-				<AddObservation />
-			</div>
-		</>
-	)
+  return (
+    <>
+      <NavBar />
+      <Sidebar />
+    </>
+  )
 }
 
 export default App
