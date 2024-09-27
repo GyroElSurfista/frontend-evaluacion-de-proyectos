@@ -23,7 +23,7 @@ const ObjectivePage = () => {
   }
 
   return (
-    <div className='px-2 mx-6'>
+    <div className="px-2 sm:mx-6">
       <h2 className="text-2xl font-bold">Objetivos</h2>
       <hr className="border-[1.5px] border-[#c6caff] my-3" />
       {objectives.map((obj, index) => (

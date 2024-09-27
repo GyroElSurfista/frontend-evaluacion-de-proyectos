@@ -6,9 +6,9 @@ const Layout = () => {
   return (
     <>
       <NavBar />
-      <div className="flex">
+      <div className="sm:flex">
         <Sidebar />
-        <main className="flex-grow p-6 h-[calc(100vh-5rem)]">
+        <main className="sm:flex-grow p-6 h-[calc(100vh-5rem)]">
           <Outlet />
         </main>
       </div>

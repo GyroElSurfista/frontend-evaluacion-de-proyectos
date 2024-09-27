@@ -1,8 +1,5 @@
-
 const SeguimientoPage = () => {
-  return (
-    <div>SeguimientoPage</div>
-  )
+  return <div>SeguimientoPage</div>
 }
 
 export default SeguimientoPage
