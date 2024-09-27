@@ -1,11 +1,13 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { ActivityProps } from '../../ObjectivePage'
 
 interface Objective {
   iniDate: string
   finDate: string
   objective: string
   valueP: string
+  activities: ActivityProps[] // Añadir las actividades aquí
 }
 
 interface NewObjectiveModalProps {

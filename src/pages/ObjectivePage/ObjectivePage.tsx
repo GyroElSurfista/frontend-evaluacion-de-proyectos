@@ -23,40 +23,13 @@ interface Objective {
   finDate: string
   objective: string
   valueP: string
+  activities: ActivityProps[] // Añadir las actividades aquí
 }
 
 const ObjectivePage = () => {
   // Propio de ActivityPage
-  const [activities, setActivities] = useState<ActivityProps[]>([
-    {
-      nroActividad: 1,
-      nombreActividad: 'Entrevista a nuestro tutor TIS',
-      fechaInicio: new Date(),
-      fechaFin: new Date(),
-      descripcion: 'Descripcion 1 - Elicitación de requerimientos para obtener el Product Backlog.',
-      responsable: null,
-      resultado: 'Completar las historias de usuario con su estimación y priorización correspondiente',
-    },
-    {
-      nroActividad: 2,
-      nombreActividad: 'Observar procedimiento de evaluaciones TIS',
-      fechaInicio: new Date(),
-      fechaFin: new Date(),
-      descripcion:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mi massa, posuere vel interdum a, posuere at mauris. Cras sem est, malesuada sed libero eget, egestas vulputate turpis. Vivamus eu placerat sem. Vestibulum lobortis velit sit amet nunc faucibus, vel viverra ex accumsan. Ut imperdiet nunc neque, nec sodales risus faucibus vitae. Mauris interdum nulla in elementum vulputate. Phasellus sollicitudin vehicula ornare. Morbi id mauris fermentum, consequat nisl nec, hendrerit neque. Maecenas pharetra mattis quam. Integer quis fringilla nibh, quis lobortis massa. Quisque non vehicula enim. Nullam non lorem in sem vulputate faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus.',
-      responsable: 'Winsor Orellana',
-      resultado: 'Completar las historias de usuario con su estimación y priorización correspondiente',
-    },
-    {
-      nroActividad: 10,
-      nombreActividad: 'Prototipado del diseño',
-      fechaInicio: new Date(),
-      fechaFin: new Date(),
-      descripcion: 'Prototipado del diseño para discutirlo junto al tutor TIS.',
-      responsable: null,
-      resultado: 'Prototipo base para programar en el frontend.',
-    },
-  ])
+  const [objectives, setObjectives] = useState<Objective[]>([]) // Estado para almacenar los objetivos
+  const [selectedObjectiveIndex, setSelectedObjectiveIndex] = useState<number | null>(null) // Para almacenar el índice del objetivo seleccionado
   const [selectedActivity, setSelectedActivity] = useState<SelectedActivityState>(null)
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
@@ -65,6 +38,7 @@ const ObjectivePage = () => {
   const handleDialogClose = () => {
     setIsDialogOpen(false)
     setSelectedActivity(null)
+    setSelectedObjectiveIndex(null)
   }
 
   const handleNewActivityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,23 +59,28 @@ const ObjectivePage = () => {
   }
 
   const handleAddNewActivity = () => {
-    if (selectedActivity) {
-      setActivities((prevActivities) => [...prevActivities, { ...selectedActivity, nroActividad: activities.length + 1 }])
-      setIsDialogOpen(false)
-      setSelectedActivity(null)
+    if (selectedActivity !== null && selectedObjectiveIndex !== null) {
+      const updatedObjectives = [...objectives]
+      updatedObjectives[selectedObjectiveIndex].activities.push({
+        ...selectedActivity,
+        nroActividad: updatedObjectives[selectedObjectiveIndex].activities.length + 1,
+      })
+      setObjectives(updatedObjectives)
+      handleDialogClose()
     }
   }
 
   // Utilizados por el ObjectiveAccordion
-  const handleActivityClick = (activity: ActivityProps) => {
+  const handleActivityClick = (activity: ActivityProps, objectiveIndex: number) => {
     setSelectedActivity(activity)
+    setSelectedObjectiveIndex(objectiveIndex)
     setIsEditMode(false)
     setIsDialogOpen(true)
   }
 
-  const handleAddActivityClick = () => {
+  const handleAddActivityClick = (objectiveIndex: number) => {
     setSelectedActivity({
-      nroActividad: activities.length + 1,
+      nroActividad: 0,
       nombreActividad: '',
       fechaInicio: new Date(),
       fechaFin: new Date(),
@@ -109,12 +88,13 @@ const ObjectivePage = () => {
       responsable: null,
       resultado: '',
     })
+    setSelectedObjectiveIndex(objectiveIndex)
     setIsEditMode(true)
     setIsDialogOpen(true)
   }
 
   // Propio de ObjectivePage
-  const [objectives, setObjectives] = useState<Objective[]>([]) // Estado para almacenar los objetivos
+  // const [objectives, setObjectives] = useState<Objective[]>([]) // Estado para almacenar los objetivos
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -123,7 +103,7 @@ const ObjectivePage = () => {
 
   // Función para añadir un nuevo objetivo
   const handleCreateObjective = (newObjective: Objective) => {
-    setObjectives([...objectives, newObjective])
+    setObjectives([...objectives, { ...newObjective, activities: [] }])
   }
 
   return (
@@ -138,9 +118,9 @@ const ObjectivePage = () => {
                 objective={obj}
                 indexObj={index + 1}
                 key={index}
-                activities={activities}
-                handleActivityClick={handleActivityClick}
-                handleAddActivityClick={handleAddActivityClick}
+                activities={obj.activities}
+                handleActivityClick={(activity) => handleActivityClick(activity, index)}
+                handleAddActivityClick={() => handleAddActivityClick(index)}
               />
               <hr className="border-[1.5px] border-[#c6caff] mt-4" />
             </>
