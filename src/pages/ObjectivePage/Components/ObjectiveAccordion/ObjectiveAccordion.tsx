@@ -1,7 +1,6 @@
 import './ObjectiveAccordion.css'
 
 // Propio de ActivityPage
-import Button from '@mui/material/Button'
 import Activity from '../../../ActivityPage/Components/Activity'
 
 // Propio de ObjectiveAccordion
@@ -63,10 +62,10 @@ const ObjectiveAccordion: React.FC<ObjectiveAccordionProps> = ({
         <div className="p-4 text-gray-600">
           <p>{objective.objective}</p>
 
-          {activities.map((activity) => (
+          {activities.map((activity, index) => (
             <Activity
               key={activity.nroActividad}
-              nroActividad={activity.nroActividad}
+              nroActividad={index + 1}
               nombreActividad={activity.nombreActividad}
               fechaInicio={activity.fechaInicio}
               fechaFin={activity.fechaFin}
@@ -76,9 +75,9 @@ const ObjectiveAccordion: React.FC<ObjectiveAccordionProps> = ({
               onClick={() => handleActivityClick(activity)}
             />
           ))}
-          <Button variant="contained" onClick={handleAddActivityClick}>
-            Agregar actividad
-          </Button>
+          <button onClick={handleAddActivityClick} className="button-primary">
+            + Nueva Actividad
+          </button>
         </div>
       )}
     </div>
