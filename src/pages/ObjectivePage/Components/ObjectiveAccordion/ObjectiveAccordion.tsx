@@ -1,5 +1,11 @@
 import './ObjectiveAccordion.css'
+
+// Propio de ActivityPage
+import Activity from '../../../ActivityPage/Components/Activity'
+
+// Propio de ObjectiveAccordion
 import { useState } from 'react'
+import { ActivityProps } from '../../ObjectivePage'
 interface Objective {
   iniDate: string
   finDate: string
@@ -10,6 +16,10 @@ interface Objective {
 interface ObjectiveAccordionProps {
   objective: Objective
   indexObj: number
+
+  activities: ActivityProps[]
+  handleActivityClick: (activity: ActivityProps) => void
+  handleAddActivityClick: () => void
 }
 
 const formatDate = (dateString: string) => {
@@ -19,7 +29,14 @@ const formatDate = (dateString: string) => {
   return `${day}/${month}`
 }
 
-const ObjectiveAccordion: React.FC<ObjectiveAccordionProps> = ({ objective, indexObj }) => {
+const ObjectiveAccordion: React.FC<ObjectiveAccordionProps> = ({
+  objective,
+  indexObj,
+  activities,
+  handleActivityClick,
+  handleAddActivityClick,
+}) => {
+  // Propio de ObjectiveAccordion
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleAccordion = () => {
@@ -44,6 +61,23 @@ const ObjectiveAccordion: React.FC<ObjectiveAccordionProps> = ({ objective, inde
       {isOpen && (
         <div className="p-4 text-gray-600">
           <p>{objective.objective}</p>
+
+          {activities.map((activity, index) => (
+            <Activity
+              key={activity.nroActividad}
+              nroActividad={index + 1}
+              nombreActividad={activity.nombreActividad}
+              fechaInicio={activity.fechaInicio}
+              fechaFin={activity.fechaFin}
+              descripcion={activity.descripcion}
+              responsable={activity.responsable}
+              resultado={activity.resultado}
+              onClick={() => handleActivityClick(activity)}
+            />
+          ))}
+          <button onClick={handleAddActivityClick} className="button-primary">
+            + Nueva Actividad
+          </button>
         </div>
       )}
     </div>
