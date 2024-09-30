@@ -72,6 +72,17 @@ const ObjectivePage = () => {
   }
 
   // Utilizados por el ObjectiveAccordion
+  const handleDeleteActivityClick = (objectiveIndex: number, activityIndex: number) => {
+    setObjectives((prevObjectives) => {
+      const updatedObjectives = [...prevObjectives]
+      console.log(objectiveIndex, activityIndex)
+      updatedObjectives[objectiveIndex].activities = updatedObjectives[objectiveIndex].activities.filter(
+        (_, index) => index !== 1
+      )
+      return updatedObjectives
+    })
+  }
+
   const handleActivityClick = (activity: ActivityProps, objectiveIndex: number) => {
     setSelectedActivity(activity)
     setSelectedObjectiveIndex(objectiveIndex)
@@ -144,6 +155,7 @@ const ObjectivePage = () => {
                 activities={obj.activities}
                 handleActivityClick={(activity) => handleActivityClick(activity, index)}
                 handleAddActivityClick={() => handleAddActivityClick(index)}
+                handleDeleteActivityClick={(activityIndex) => handleDeleteActivityClick(index, activityIndex)}
               />
             </>
           ))}
